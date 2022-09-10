@@ -18,7 +18,7 @@ row_chief = 0
 user_agent = ('Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) '
               'Gecko/20100101 Firefox/50.0')
 main_p = requests.get(
-    'https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B9%D0%BE%D0%B3%D0%B5%D0%BA%D1%81%D0%BE%D0%BB&morphology=on&search-filter=%D0%94%D0%B0%D1%82%D0%B5+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&pc=on&currencyIdGeneral=-1',
+    'https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B9%D0%BE%D0%BF%D1%80%D0%BE%D0%BC%D0%B8%D0%B4&morphology=on&search-filter=%D0%94%D0%B0%D1%82%D0%B5+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&af=on&ca=on&pc=on&pa=on&currencyIdGeneral=-1',
     headers={'User-Agent': user_agent})
 main_p_dec = main_p.content.decode(encoding='utf-8')
 soup = BeautifulSoup(main_p_dec, 'html.parser')

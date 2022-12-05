@@ -76,8 +76,13 @@ def sku_volume(param):
         final_list = []
         idx = 0
         for el in range(len(form_concentration(param))):
-            idx = other_text.index('Сведения из ГРЛС', idx + 1)
-            final_list.append(other_text[idx + 1])
+            try:
+                idx = other_text.index('Сведения из ГРЛС', idx + 1)
+            except ValueError as e:
+                print('ERROR')
+                final_list.append('ERROR')
+            else:
+                final_list.append(other_text[idx + 1])
         return final_list
     else:
         return ['Тендер без объема' for el in product_name(param)]
@@ -140,7 +145,7 @@ def form_concentration(param):
 if __name__ == '__main__':
     user_agent = ('Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0')
     main_p = requests.get(
-        f'https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0318300163422000319',
+        f'https://zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber=0373200006521000007',
         headers={'User-Agent': user_agent})
     main_p_dec = main_p.content.decode(encoding='utf-8')
     soup = BeautifulSoup(main_p_dec, 'html.parser')
@@ -150,3 +155,4 @@ if __name__ == '__main__':
     # print(sku_price(soup))
     # print(sku_value(soup))
     print(istender_novolume(soup))
+    print(sku_volume(soup))

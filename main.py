@@ -19,7 +19,7 @@ row_chief = 0
 user_agent = ('Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) '
               'Gecko/20100101 Firefox/50.0')
 main_p = requests.get(
-    'https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B9%D0%BE%D0%B3%D0%B5%D0%BA%D1%81%D0%BE%D0%BB&morphology=on&search-filter=%D0%94%D0%B0%D1%82%D0%B5+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F&pageNumber=1&sortDirection=false&recordsPerPage=_100&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&pc=on&currencyIdGeneral=-1',
+    'https://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B9%D0%BE%D0%B3%D0%B5%D0%BA%D1%81%D0%BE%D0%BB&morphology=on&search-filter=%D0%94%D0%B0%D1%82%D0%B5+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F&pageNumber=1&sortDirection=false&recordsPerPage=_200&showLotsInfoHidden=false&sortBy=UPDATE_DATE&fz44=on&pc=on&currencyIdGeneral=-1',
     timeout=(100, 100),headers={'User-Agent': user_agent})
 main_p_dec = main_p.content.decode(encoding='utf-8')
 soup = BeautifulSoup(main_p_dec, 'html.parser')
@@ -42,6 +42,8 @@ for auction in auctions:
                               timeout=(100, 100), headers={'User-Agent': user_agent})
         main_p_dec = main_p.content.decode(encoding='utf-8')
         soup = BeautifulSoup(main_p_dec, 'html.parser')
+        if main_p.status_code != 200:
+            continue
         if el == 'common-info':
             results_1_col = [auction, main_p.status_code, common_info.center_name(main_p_dec),
                              common_info.product_name(soup), common_info.sku_volume(soup), common_info.sku_price(soup),
@@ -67,6 +69,7 @@ for auction in auctions:
                             ws[f'{col}{row}'] = el_2[idx_el_2]
                         next_free_col_idx = columns_xls.index(col) + 1
             common_soup = soup
+            print(auction)
             print(main_p.status_code)
             print(common_info.center_name(main_p_dec))
             print(common_info.dates(main_p_dec))
